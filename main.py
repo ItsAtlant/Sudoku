@@ -36,34 +36,3 @@ def display_sudoku_grid(grid):
             if grid[i, j] != 0:
                 ax.text(j+0.5, i+0.5, str(grid[i, j]), fontsize=16, ha='center', va='center')
     plt.show()
-
-def is_valid_move(grid, row, col, value):
-    # Controlla la riga
-    if value in grid[row, :]:
-        return False
-    
-    # Controlla la colonna
-    if value in grid[:, col]:
-        return False
-    
-    # Controlla il quadrante 3x3
-    start_row = (row // 3) * 3
-    start_col = (col // 3) * 3
-    if value in grid[start_row:start_row+3, start_col:start_col+3]:
-        return False
-    
-    return True
-
-# Esempio di utilizzo
-sudoku_grid = create_sudoku_grid()
-display_sudoku_grid(sudoku_grid)
-
-# Esempio di controllo dell'inserimento di un valore
-row = 0
-col = 0
-value = 5
-
-if is_valid_move(sudoku_grid, row, col, value):
-    sudoku_grid[row, col] = value
-else:
-    print("Mossa non valida!")
