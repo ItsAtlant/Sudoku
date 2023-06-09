@@ -89,19 +89,30 @@ def suggerimento(sudoku_grid, row, col, value):
     print(f"Uhm, sembra che {value}, non sia il numero giusto!,\
             Perchè non provi con uno di questi: {numeri_suggeriti}?")
 
+def check(sudoku_grid):
+
+    # Controllo se tutte le celle sono state riempite
+    num_nonzero = np.count_nonzero(sudoku_grid)
+    if num_nonzero == 81:
+        # Tutte le celle sono state riempite
+        return True
+    else:
+        # Ci sono ancora celle vuote
+        return False
 
 
-# Esempio di utilizzo
-sudoku_grid = create_sudoku_grid()
-display_sudoku_grid(sudoku_grid)
+while(check):
+    # Esempio di utilizzo
+    sudoku_grid = create_sudoku_grid()
+    display_sudoku_grid(sudoku_grid)
 
-# Esempio di controllo dell'inserimento di un valore
-row = 0
-col = 0
-value = 5
+    # Esempio di controllo dell'inserimento di un valore
+    row = 0
+    col = 0
+    value = 5
 
-if is_valid_move(sudoku_grid, row, col, value):
-    sudoku_grid[row, col] = value
-else:
-    print("Mossa non valida!")
-    suggerimento(sudoku_grid, row, col, value)
+    if is_valid_move(sudoku_grid, row, col, value):
+        sudoku_grid[row, col] = value
+    else:
+        print("Mossa non valida!")
+        suggerimento(sudoku_grid, row, col, value)
