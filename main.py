@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import random
 
 def create_sudoku_grid():
     grid = np.zeros((9, 9), dtype=int)
@@ -54,6 +55,42 @@ def is_valid_move(grid, row, col, value):
     
     return True
 
+
+def suggerimento(sudoku_grid, row, col, value):
+
+    numeri_suggeriti = []
+    numeri_possibili = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+    # Rimuovi i numeri già presenti nella stessa riga
+    for num in sudoku_grid[row]:
+        if num in numeri_possibili:
+            numeri_possibili.remove(num)
+
+    # Rimuovi i numeri già presenti nella stessa colonna
+    for i in range(9):
+        num = sudoku_grid[i][col]
+        if num in numeri_possibili:
+            numeri_possibili.remove(num)
+
+    # Calcola la posizione iniziale della regione 3x3
+    start_riga = (row // 3) * 3
+    start_colonna = (col // 3) * 3
+
+    # Rimuovi i numeri già presenti nella stessa regione 3x3
+    for i in range(start_riga, start_riga + 3):
+        for j in range(start_colonna, start_colonna + 3):
+            num = sudoku_grid[i][j]
+            if num in numeri_possibili:
+                numeri_possibili.remove(num)
+
+    # Scegli casualmente due numeri dalla lista dei numeri possibili
+    numeri_suggeriti = random.sample(numeri_possibili, 2)
+            
+    print(f"Uhm, sembra che {value}, non sia il numero giusto!,\
+            Perchè non provi con uno di questi: {numeri_suggeriti}?")
+
+
+
 # Esempio di utilizzo
 sudoku_grid = create_sudoku_grid()
 display_sudoku_grid(sudoku_grid)
@@ -67,3 +104,4 @@ if is_valid_move(sudoku_grid, row, col, value):
     sudoku_grid[row, col] = value
 else:
     print("Mossa non valida!")
+    suggerimento(sudoku_grid, row, col, value)
